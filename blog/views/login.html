@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>博客账号后台登录界面</title>
+	<link rel="stylesheet" href="/css/common.css">
+</head>
+<body>
+	<div class="account">
+		<div class="account-content">
+			<h2>后台登录账号</h2>
+			<form action="/login" method="post">
+				<div class="account-box">
+					<span>用户名：</span>
+					<input class="username box" type="text" name="username" value="" placeholder="请输入你的用户名"> 
+				</div>
+				<div class="account-box">
+					<span>密码：</span>
+					<input class="password box" type="password" name="password" value="" placeholder="请输入你的密码">
+				</div>
+				<div class="tip"></div>	
+				<div class="btn">
+					<input type="submit" value="提 交" class="submit">
+					<a href="/">取 消</a>
+				</div>
+			</form>
+
+		</div>
+	</div>
+	<script src="/js/jquery.min.js"></script>
+	<script>
+	// 登录验证
+	$(function() {
+		$('.account').hide().fadeIn(1500);
+		var userBool = false;
+		var pwdBool = false;
+		// 聚焦提示取消
+		$('input').focus(function(){
+			$('.tip').html('');
+		})
+
+		// 账号验证
+		$('.username').blur(function(){
+			userBool = true;
+			// 获取用户输入的值
+			var value = $(this).val().trim();
+
+			// 用户没有输入内容
+			if(value == '') {
+				userBool = false;
+				return false;
+			}
+
+			// 中文验证
+			var reg1 = /[\u4E00-\u9FA5\u3002\uff1b\uff0c\uff1a\u201c\u201d\uff08\uff09\u3001\uff1f\u300a\u300b]/
+			if(reg1.test(value)){
+				$('.tip').html('账号格式错误');
+				return false;
+				userBool = false;
+			}
+		})
+
+		// 密码验证
+		$('.password').blur(function(){
+			pwdBool = true;
+			// 获取用户输入的密码值
+			var value = $(this).val().trim();
+			// 用户没有输入内容
+			if( value.length == 0) {
+				pwdBool = false;
+				return false;
+			}
+		})
+
+		// 表单验证
+		$('form').submit(function(){
+			if(userBool && pwdBool) {
+
+			} else if(!userBool){
+				$('.tip').text('请输入帐号');
+				return false;
+			} else if(!pwdBool){
+				$('.tip').text('请输入密码');
+				return false;
+			} else if (!userBool && !pwdBool) {
+				$('.tip').text('账号或密码输入错误');
+				return false;
+			}
+ 		})
+	})
+	</script>
+</body>
+</html>

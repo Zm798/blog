@@ -1,0 +1,87 @@
+body,h3,input,span,p,a {
+	margin: 0;
+	padding: 0;
+	text-decoration: none;
+}
+body {
+	background: url(/uploads/2.jpg) no-repeat;
+	background-position: 0 0;
+	background-size: 100% 130%;
+}
+.account {
+	margin: 120px 0 120px 120px;
+	width: 410px;
+	height: 380px;
+	border: 1px solid rgba(255,255,255,.7);
+	background: rgba(0,0,0,.4);
+	border-radius: 5px;
+}
+.account-content {
+	margin: 40px 20px 0;
+}
+.account-box {
+	margin-bottom: 20px;
+}
+h2 {
+	text-align: center;
+	color: #ddd;
+	font-size: 28px;
+	font-weight: 400;
+}
+span {
+	display: inline-block;
+	color: #ddd;
+	width: 67px;
+	height: 44px;
+	line-height: 35px;
+	text-align: right;
+}
+.box {
+	padding-left: 10px;
+	width: 270px;
+	height: 44px;
+	border: none;
+	outline: none;
+	border: 2px solid #666;
+	border-radius: 5px;
+	background: rgba(255,255,255,.8);
+}
+input::placeholder {
+	color: #666;
+}
+.box:focus {
+	border: 2px solid rgb(74,175,233);
+	box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+}
+.btn {
+	margin-left: 78px;
+}
+.submit {
+	color: #fff;
+	font-size: 20px;
+	width: 120px;
+	height: 44px;
+	border: none;
+	border-radius: 5px;
+	background: #ff6700;
+}
+a {	
+	display: inline-block;
+	vertical-align: top;
+	color: #333;
+	font-size: 20px;
+	margin-left: 30px;
+	width: 120px;
+	height: 44px;
+	border: none;
+	text-align: center;
+	line-height: 44px;
+	background: #ddd;
+	border-radius: 5px;
+}
+.tip {
+	font-size: 12px;
+	color: #fff;
+	margin-left: 80px;
+	height: 40px;
+}	

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>网站后台管理</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/sb-admin.css" rel="stylesheet">
+    <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="wrapper">
+       <%- include ../nav.html %>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">修改信息</h1>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" action="/users/update" method="post">
+                            <input type="hidden" name="_id" value="<%=user._id%>">
+                            <div class="form-group">
+                                <label>用户名: </label>
+                                <input type="text" name="username" class="form-control" value="<%=user.username%>" placeholder="请输入你的用户名">
+                            </div>
+                            <div class="form-group">
+                                <label>年龄：</label>
+                                <input type="number" class="form-control" name="age" value="<%=user.age%>" placeholder="请输入你的年龄">
+                            </div>
+                            <div class="form-group">
+                                <label>性别:</label>
+                                <input type="radio" name="sex" value="0" <%=user.sex == 0 ? 'checked' : '' %>>男
+                                <input type="radio" name="sex" value="1" <%=user.sex == 1 ? 'checked' : '' %>>女
+                            </div>
+                            <div class="form-group">
+                                <label>籍贯:  </label>
+                                <select name="place" class="form-control">
+                                    <option value="">--请选择--</option>
+                                    <option value="0" <%=user.sex == 0 ? 'selected' : '' %>>北京市</option>
+                                    <option value="1" <%=user.sex == 1 ? 'selected' : '' %>>天津市</option>
+                                    <option value="2" <%=user.sex == 2 ? 'selected' : '' %>>辽宁省</option>
+                                    <option value="3" <%=user.sex == 3 ? 'selected' : '' %>>山西省</option>
+                                    <option value="4" <%=user.sex == 4 ? 'selected' : '' %>>四川省</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>个人简介:  </label>
+                                <textarea type="text" name="intro" class="form-control" cols="30" rows="10" placeholder="请输入100字以内的内容"><%=user.intro%></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-6 col-sm-10">
+                                    <button type="submit" class="btn btn-danger">提交</button>
+                                </div>
+                            </div><br> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/jquery-1.11.0.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

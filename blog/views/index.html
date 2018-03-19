@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>叶子的博客</title>
+    <link rel='stylesheet' href='/css/reset.css' />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/editor.md/css/editormd.preview.min.css">
+    <style>
+    .fixed {
+      position: fixed;
+      top: 0;
+      left: 0; 
+      z-index: 99;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="topbar">
+        <div class="topbar-right">
+            <a href="/reg">注册</a>
+            <% if(admin) {%>
+                <a href="/users">后台界面</a>
+            <%} else { %>
+                <a href="/login">后台登录</a>
+            <%} %>
+            <a href="#">关于我</a>
+        </div>
+    </div>
+    <!-- 顶部导航栏 -->
+    <nav class="header">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand boke" href="#">叶子的博客</a>  
+                <!--  -->
+                <a class="navbar-brand index" href="?tid=<%=types[0]._id%>">首页</a>
+            </div> 
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <% types.forEach(function(value,key){ %>
+                        <li><a class="type" href="?tid=<%=value._id%>"><%=value.typename%></a></li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- 内容左栏 -->
+    <div class="content">
+        <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+               <div class="list-group">
+                    <% articles.forEach(function(value,key) {%>
+                         <a href="?tid=<%= tid%>&aid=<%=value._id%>" class="list-group-item"><%=value.articlename%></a>
+                    <% }) %>
+                </div>
+            </div>
+            <div class="col-md-9">
+                
+                <div id="markdowntohtml">
+                    <h3><%=article.articlename%></h3>
+                    <p><%=moment(article.updatedAt).format('YYYY-MM-DD HH:mm:ss')%></p> 
+                    <textarea style="display: none;"><%=article.text%></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <script src="/js/jquery-1.11.0.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <!-- markdown的js文件 -->
+    <script src="/editor.md/lib/marked.min.js"></script>
+    <script src="/editor.md/lib/prettify.min.js"></script>
+    <script src="/editor.md/lib/raphael.min.js"></script>
+    <script src="/editor.md/lib/underscore.min.js"></script>
+    <script src="/editor.md/lib/sequence-diagram.min.js"></script>
+    <script src="/editor.md/lib/flowchart.min.js"></script>
+    <script src="/editor.md/lib/jquery.flowchart.min.js"></script>
+    <script src="/editor.md/editormd.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+        editormd.markdownToHTML("markdowntohtml", {
+            htmlDecode: "style,script,iframe", // you can filter tags decode
+            emoji: true,
+            taskList: true,
+            tex: true, // 默认不解析
+            flowChart: true, // 默认不解析
+            sequenceDiagram: true, // 默认不解析
+        });
+    });
+
+    // 头部固定导航栏
+    $(window).scroll(function(){
+        // 获取滚动距离
+        var top = $(this).scrollTop();
+        if(top > 180) {
+            $('.header').addClass('fixed');
+        } else {
+            $('.header').removeClass('fixed');
+        }
+    })
+    </script>
+</body>
+
+</html>

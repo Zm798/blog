@@ -1,0 +1,63 @@
+/* 顶部导航栏 */
+body {
+    background: #ededed;
+}
+.topbar {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background: #000;
+}
+
+.topbar a {
+    margin-left: 13px;
+    color: #ccc;
+    font-size: 12px;
+}
+
+.topbar .topbar-right {
+    margin-right: 50px;
+    float: right;
+}
+
+.topbar a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* 头部导航栏 */
+ .header {
+    width: 100% !important;
+    height: 50px;
+    background: rgba(34, 34, 34, .9);
+    box-shadow: 1px 3px 5px #39F;
+} 
+.header .type {
+    color: #fff;
+    font-size: 16px;
+}
+@font-face {
+    font-family: "jianwawa";
+    src: url(/fonts/jianwawa.ttf);
+}
+.header .boke {
+    margin-right: 10px;
+    font-size: 26px;
+    color: #fff;
+    font-family: "jianwawa";
+}
+.header .index {
+    color: #619d21;
+}
+.nav {
+    height: 55px;
+    margin-bottom: 25px;
+}
+.nav .type:hover {
+    background-color: #666!important;
+}
+
+.content{
+    clear: both;
+    background: 
+}

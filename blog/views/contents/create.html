@@ -1,0 +1,87 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>网站后台管理</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/sb-admin.css" rel="stylesheet">
+    <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/editor.md/css/editormd.min.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <%- include ../nav.html %>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">添加文章</h1>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form" action="/contents/create" method="post">
+                            <div class="form-group">
+                                <label for="type" class="control-label">文章标题： </label>
+                                <input type="text" class="art form-control" name="articlename" placeholder="请输入你的文章名">
+                            </div>
+                            <div class="form-group">
+                                <label for="type" class="type control-label">文章分类：</label>
+                                <select name="type" class="form-control">
+                                   <option value="">--请选择--</option>
+                                   <% types.forEach(function(value,key){ %>
+                                        <option value="<%=value._id%>"><%=value.typename%></option>
+                                   <% }) %>
+                                </select> 
+                            </div>
+                            <div class="form-group">
+                                <label for="content" class="control-label">文章内容：
+                                </label>
+                                    <div id="box">
+                                        <textarea name="text" rows="10" class="form-control"></textarea>
+                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-6 col-sm-10">
+                                    <button type="submit" class="btn btn-danger">提交</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/jquery-1.11.0.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/editor.md/editormd.min.js"></script>
+    <script type="text/javascript">
+    var testEditor;
+    $(function() {
+        testEditor = editormd("box", {
+            width   : "100%",
+            height  : 640,
+            syncScrolling : "single",
+            path    : "/editor.md/lib/"
+        });
+    });
+        $('form').submit(function() {
+        // 表单提交的时候判断文章名是否输入
+            if ($('.art').val()=='') {
+                return false;
+                // 表单提交的时候判断是否选择分类
+            } else if ($('.type').val()== 0) {
+                return false;
+            }
+        })
+
+    </script>
+</body>
+</html>

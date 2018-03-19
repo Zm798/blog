@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>网站后台管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/sb-admin.css" rel="stylesheet">
+    <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style>
+    table tr td,table tr th{
+        vertical-align: middle !important;
+    }
+    .user {
+        margin-right: 50px;
+    }
+    .submit {
+        margin-left: 80px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <%- include ../nav.html %>
+        
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12">
+                        <h1 class="page-header">用户首页</h1>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-lg-12 col-sm-12">
+                        <table class="table" width="10t we0%">
+                            <tr>
+                                <td colspan="9">
+                                    <form action="">
+                                        用户名：<input type="text" class="user" name="username" value="<%=query.username%>">
+                                        年龄： <input type="text" name="minage" placeholder="最小年龄" value=""> &nbsp;- &nbsp;<input type="text" name="maxage" placeholder="最大年龄" value=""> 
+                                        <input type="submit" value="提交" class="submit btn btn-info btn-xs">
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>编号</th>
+                                <th>头像</th>
+                                <th>用户名</th>
+                                <th>性别</th>
+                                <th>年龄</th>
+                                <th>籍贯</th>
+                                <th>注册时间</th>
+                                <th>操作</th>
+                            </tr>
+                            <% users.forEach(function(value,key) { %>
+                                <tr>
+                                    <td><%=value._id%></td>
+                                    <td><img src="<%=value.avatar ? value.avatar : '/uploads/5.jpg'%>" width="60" alt="" class="img-thumbnail"></td>
+                                    <td><%=value.username%></td>
+                                    <td><%=sex[value.sex]%></td>
+                                    <td><%=value.age%></td>
+                                    <td><%=place[value.place]%></td>
+                                    <td><%=moment(value.createdAt).format('YYYY-MM-DD HH:mm:ss')%></td>
+                                    <td>
+                                      <a href="/users/avatar/<%=value._id%>" class="btn btn-info btn-xs">设置头像</a>
+                                      <a href="/users/update/<%=value._id%>" class="btn btn-warning btn-xs">修改</a>
+                                      <a href="/users/remove/<%=value._id%>" class="btn btn-danger btn-xs">删除</a>
+                                    </td>
+                                </tr>
+
+                            <% }) %>
+                            <tr>
+                                <td colspan="8">
+                                    <nav>
+                                      <ul class="pagination">
+                                        <li>
+                                          <a href="?<%=str%>page=<%=page.prevPage%>">
+                                            <span aria-hidden="true">&laquo;</span>
+                                          </a>
+                                        </li>
+                                        <% for (var i = 1; i <= page.totalPage; i++) { %>
+                                        <li class="<%= page.nowPage == i ? 'active' : '' %>"><a href="/users?<%=str%>page=<%=i%>"><%=i%></a></li>
+                                        <% } %>
+                                        <li>
+                                          <a href="?<%=str%>page=<%=page.nextPage%>" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </nav>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/jquery-1.11.0.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>

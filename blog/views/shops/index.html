@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>网站后台管理</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/sb-admin.css" rel="stylesheet">
+    <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style>
+        table tr td,table tr th{
+            vertical-align: middle !important;
+    }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <%- include ../nav.html %>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">商品首页</h1>
+                        <a href="/shops/collect">点击采集美食杰的数据</a>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table">
+                            <tr>
+                                <th>编号</th>
+                                <th>名称</th>
+                                <th>图片</th>
+                                <th>评论</th>
+                                <th>出处</th>
+                                <th>操作</th>
+                            </tr>
+                            <% shops.forEach(function(value,key) { %>
+                                <tr>
+                                    <td><%=value._id%></td>
+                                    <td><%=value.title%></td>
+                                    <td><img src="<%=value.image%>" alt="" width="150px" class="img-thumbnail"></td>
+                                    <td><%=value.evaluate%></td>
+                                    <td><%=value.author%></td>
+                                    <td>
+                                        <a href="/shops/remove/<%=value._id%>" class="btn btn-danger btn-xs">删除</a>
+                                    </td>
+                                </tr>
+                            <% }) %> 
+                            <tr>
+                                <td colspan="8">
+                                    <nav>
+                                        <ul class="pagination">
+                                            <li>
+                                                <a href="?page=<%=page.prevPage%>">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <%for(var i = 1; i <= page.totalPage; i++) {%>
+                                                <li class="<%= page.nowPage == i ? 'active' : '' %>"><a href="?page=<%=i%>"><%=i%></a></li>
+                                            <% } %>
+                                            <li>
+                                                <a href="?page=<%=page.nextPage%>" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </td>
+                            </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/jquery-1.11.0.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

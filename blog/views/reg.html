@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册界面</title>
+	<link rel="stylesheet" href="/css/common.css">
+	<style>	
+	.reg {
+		margin: 80px 0 60px 120px;
+		height: 500px;
+	}
+	.tel {
+		padding-left: 10px;
+		width: 170px;
+		height: 44px;
+		border: none;
+		outline: none;
+		border: 2px solid #666;
+		border-radius: 5px;
+		background: rgba(255,255,255,.8);
+	}
+	.send {
+		margin-left: 10px;
+		vertical-align: top;
+		width: 80px;
+		height: 48px;
+		color: #ddd;
+		font-size: 16px;
+		border: none;
+		outline: none;
+		border-radius: 4px;
+		background: rgb(74,175,233);
+
+	}
+	</style>
+</head>
+<body>
+	<div class="account reg">
+		<div class="account-content">
+			<h2>账号注册</h2>
+			<form action="/reg" method="post">
+				<div  class="account-box">
+					<span>用户名：</span>
+					<input class="username box" type="text" name="username" value="" placeholder="请输入你的用户名"> 
+				</div>
+				<div class="account-box">
+					<span>密码：</span>
+					<input class="password box" type="password" name="password" value="" placeholder="请输入你的密码">
+				</div>
+				<div class="account-box">
+					<span>手机号：</span>
+					<input class="tel" type="text" name="phone" value="" placeholder="请输入你的手机号">
+					<button type="button" class="send">点击发送</button>
+				</div>
+				<div class="account-box">
+					<span>验证码：</span>
+					<input type="text" name="code" value="" class="box num" placeholder="请输入验证码">
+				</div>
+				
+				<div class="tip"></div>	
+				<div class="btn">
+					<input type="submit" value="提 交" class="submit">
+					<a href="/">取 消</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="/js/jquery.min.js"></script>
+	<script>
+	$(function(){
+		$('.account').hide().fadeIn(1500);
+		var userBool = false;
+		var pwdBool = false;
+		var telBool = false;
+		var numBool = false;
+		// 聚焦
+		$('input').focus(function(){
+			$('.tip').html('');
+		})
+
+		// 失焦
+		$('.username').blur(function(){
+			userBool = true;
+			// 获取用户输入的值
+			var value = $(this).val().trim();
+
+			// 没有输入内容
+			if(value.length == 0) {
+				userBool = false;
+				return;
+			}
+			// 请用字母数字下划线命名
+			var reg = /^\w+$/
+			if(!reg.test(value)) {
+				$('.tip').html('请用字母、数字或下划线命名');
+				userBool = false;
+				return;
+			}
+			// 用户名必须是4-18位的数字字母下划线 
+			var reg1 = /^\w{4,18}$/;
+			if(!reg1.test(value)) {
+				$('.tip').html('帐号必须由4-18个字母数字下划线组成');
+				userBool = false;
+				return;
+			}
+			// 格式正确,判断判断用户名是否存在
+			$.post('checkUser',{username:value},function(msg) {
+				if(msg.success == 1) {
+					$('.tip').html('用户名已经注册');
+					userBool = false;
+					return;
+				} else {
+					$('.tip').html('该用户名可用');
+				}
+			})
+		})
+
+		// 密码验证
+		$('.password').blur(function(){
+			pwdBool = true;
+			// 获取用户输入的值
+			var value = $(this).val().trim();
+			// 用户没有输入内容
+			if( value.length == 0) {
+				pwdBool = false;
+				return;
+			}
+			// 2.密码须由6-16个字符组成，区分大小写
+			var reg2 = /^.{6,16}$/;
+			if(!reg2.test(value)) {
+				$('.tip').text('密码须由6-16个字符组成，区分大小写');
+				pwdBool = false;
+				return;
+				
+			} 
+
+		})
+
+		// 手机号验证
+		$('.tel').blur(function(){
+			telBool = true;
+			// 获取用户输入的值
+			var value = $(this).val().trim();
+			if(value.length == 0) {
+				telBool = false;
+				console.log(1111);
+				return;
+			}
+			// 1. 请输入正确的手机号
+			var reg = /^(13[0-9]|14[57]|15[012356789]|17[35678]|18[0-9]|199)[0-9]{8}$/;
+			if(!reg.test(value)) {
+				$('.tip').text('请输入正确的手机号');
+				telBool = false;
+				console.log(222);
+				return false;
+			};
+		})
+		// 短信验证
+		$('.num').keydown(function(){
+
+			numBool = true;
+			// 手机号为空的时候,不能输入短信验证
+			var telValue = $('.tel').val();
+			if(telValue.length == 0 ) {
+				console.log(111)
+				$('.tip').html('请先输入手机号');
+				numBool = false;
+				return false;
+			}
+			// 获取输入的内容
+			var value = $(this).val().trim();
+			// 没有输入内容
+			if(value.length == 0) {
+				numBool = false;
+				return;
+			}
+
+		})
+		// 发送短信
+		 $('.send').click(function() {
+            // 将手机号发发送给服务器
+            var value = $('.phone').val();
+
+            // 将手机号码发送给服务器
+            $.post('/send', { phone: value }, function(msg) {
+                if (msg.success == 1) {
+                    $('.tip').text('发送成功，请接收验证码，并输入');
+                } else {
+                    $('.tip').text('发送失败，请重新发送');
+                }
+            })
+        })
+		// 表单提交
+		$('form').submit(function(){
+			if(userBool && pwdBool && telBool && numBool) {
+
+			} else if(!userBool){
+				$('.tip').text('请输入帐号');
+				return false;
+			} else if(!pwdBool){
+				$('.tip').text('请输入密码');
+				return false;
+			}  else if (!telBool) {
+				$('.tip').text('请输入手机号');
+				return false;
+			} else if (!numBool) {
+				$('.tip').text('请输入验证码');
+				return false;
+			}
+		})
+	})
+	</script>
+</body>
+</html>
